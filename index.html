@@ -1,0 +1,35 @@
+<html> 
+<head> 
+<title>XMLHTTPRequest对象的说明DEMO</title> 
+<script language="javascript" type="text/javascript">
+
+    var xmlHttp; 
+    // 创建一个XMLHTTPRequest对象 
+    function createXMLHttpRequext () {
+        if(window.ActiveXObject) { 
+            xmlHttp = new ActiveXObject('Microsoft.XMLHTTP'); 
+        }else if(window.XMLHttpRequest) { 
+            xmlHttp = new XMLHttpRequest(); 
+        }
+        console.log(xmlHttp);
+    } 
+    function PostOrder (xmldoc) {
+        createXMLHttpRequext();
+        xmlHttp.onreadystatechange = HandleStateChange;
+        xmlHttp.open("GET", xmldoc, true);
+        xmlHttp.send(null);
+    } 
+    function HandleStateChange () {
+        if (xmlHttp.readyState == 4){
+           document.frmTest.myButton.disabled = false; 
+           console.log(xmlHttp.status);
+        } 
+    }
+</script> 
+</head> 
+<body> 
+    <form name="frmTest">   
+        <input name="myButton" type="button" value="Click Me" onclick="PostOrder('inde.php');">
+    </form>
+</body> 
+</html>

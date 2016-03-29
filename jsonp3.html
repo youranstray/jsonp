@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+function jsonp(url, data, fn){
+	data.cb='jsonp'+Math.random();
+	data.cb=data.cb.replace('.', '');
+	
+	window[data.cb]=function (json){
+		fn(json);
+		
+		//清理
+		document.head.removeChild(oS);
+	};
+	
+	var arr=[];
+	for(var name in data){
+		arr.push(name + '='+ encodeURIComponent(data[name]));
+	}
+	var sData=arr.join('&');
+	
+	var oS=document.createElement('script');
+	oS.src=url+'?'+sData;
+	
+	document.head.appendChild(oS);
+}
+
+window.onload=function (){
+	var oTxt=document.getElementById('txt1');
+	
+	oTxt.onkeyup = function (e) {
+		if(e.keyCode == '13'){
+			jsonp(
+				'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+				{wd: oTxt.value},
+				function (json){
+					console.log(json);
+				}
+			);
+		}
+		
+	};
+};
+</script>
+</head>
+
+<body>
+<input type="text" id="txt1" />
+<ul id="ul1">
+</ul>
+</body>
+</html>
